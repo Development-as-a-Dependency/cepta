@@ -1,6 +1,6 @@
 {
   "name": "cepta",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Create Express Pug Tailwind App",
   "main": "index.js",
   "bin": {
@@ -11,10 +11,14 @@
     "url": "git+https://github.com/callmehSpear/cepta.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Ted",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/callmehSpear/cepta/issues"
   },
-  "homepage": "https://github.com/callmehSpear/cepta#readme"
+  "homepage": "https://github.com/callmehSpear/cepta#readme",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "fs-extra": "^11.1.0"
+  }
 }
