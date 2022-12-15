@@ -74,14 +74,14 @@ function cepta() {
         console.log("Something went wrong when updating cepta. Please update manually.");
         return;
       }
-      console.log("Updated successfully. Run 'cepta -v' to check the version.");
+      console.log("Updated successfully. Run 'cepta v' to check the version.");
     });
   } else {
-    console.log("The command you entered is not valid. Run 'cepta -help' for help.");
+    console.log("The command you entered is not valid. Run 'cepta help' for help.");
   };
 };
 
-var version = require(__dirname + 'package.json').version;
+var version = require(__dirname + '/package.json').version;
 axios.get('https://registry.npmjs.org/cepta').then(function (response) {
   var latestVersion = response.data['dist-tags'].latest;
   if (version !== latestVersion) {
