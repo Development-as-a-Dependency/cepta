@@ -3,12 +3,7 @@ const fs = require('fs-extra');
 const axios = require('axios');
 const { exec } = require('child_process');
 
-var version = require('./package.json').version;
-axios.get('https://registry.npmjs.org/cepta').then(function (response) {
-  var latestVersion = response.data['dist-tags'].latest;
-  if (version !== latestVersion) {
-    console.log("There is a new version of cepta available. Run 'cepta -u' to update.");
-  } else
+function cepta() {
   if (process.argv[2] === 'create' || process.argv[2] === 'c') {
     // if the project name is not specified, throw an error
     if (!process.argv[3]) {
@@ -52,15 +47,15 @@ axios.get('https://registry.npmjs.org/cepta').then(function (response) {
     console.log("    Examples:");
     console.log("      cepta create banking-app-project");
     console.log("      cepta c silly-game-project");
-    console.log("  -version, v: Check the version of cepta");
+    console.log("  version, v: Check the version of cepta");
     console.log("    Examples:");
     console.log("      cepta version");
     console.log("      cepta v");
-    console.log("  -update, u: Update cepta");
+    console.log("  update, u: Update cepta");
     console.log("    Examples:");
     console.log("      cepta update");
     console.log("      cepta u");
-    console.log("  -help, h: Show this help message");
+    console.log("  help, h: Show this help message");
     console.log("    Examples:");
     console.log("      cepta help");
     console.log("      cepta h");
@@ -84,6 +79,23 @@ axios.get('https://registry.npmjs.org/cepta').then(function (response) {
   } else {
     console.log("The command you entered is not valid. Run 'cepta -help' for help.");
   };
+};
+
+var version = require('./package.json').version;
+axios.get('https://registry.npmjs.org/cepta').then(function (response) {
+  var latestVersion = response.data['dist-tags'].latest;
+  if (version !== latestVersion) {
+    console.log("Installing newest update...");
+    exec('npm i -g cepta', (err, stdout, stderr) => {
+      if (err) {
+        console.log("Something went wrong when updating cepta. Please update manually.");
+        return;
+      }
+      console.log("Updated successfully. Run 'cepta -v' to check the version.");
+      cepta();
+    });
+  } else
+    cepta();
 })
 
 
