@@ -1,6 +1,6 @@
 <div align="center">
 <h1>CEPTA</h1>
-<h2>Create Express Pug Tailwind App</h2>
+<p>Create Express Pug Tailwind App</p>
 
 <img alt="GitHub Issues" src="https://img.shields.io/github/issues/callmehspear/cepta">
 <img alt="GitHub" src="https://img.shields.io/github/license/callmehspear/cepta?logo=MIT">
