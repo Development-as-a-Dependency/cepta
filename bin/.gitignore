@@ -1,0 +1,3 @@
+node_modules
+/bin/cert/key.key
+/bin/cert/cert.cert
