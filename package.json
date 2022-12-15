@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "build": "npx tailwindcss -i ./src/style.css -o ./public/css/style.css --watch --minify",
     "test": "jest",
-    "format": "npx prettier --write ."
+    "format": "npx prettier --write .",
+    "gencert": "openssl req -nodes -new -x509 -keyout ./bin/cert/key.key -out ./bin/cert/cert.cert"
   },
   "dependencies": {
     "@prettier/plugin-pug": "^2.3.0",
