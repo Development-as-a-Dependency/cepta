@@ -5,7 +5,7 @@
 <img alt="GitHub Issues" src="https://img.shields.io/github/issues/callmehspear/cepta">
 <img alt="GitHub" src="https://img.shields.io/github/license/callmehspear/cepta?logo=MIT">
 <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/callmehspear/cepta">
-<img alt="GitHub release (latest by date including pre-releases)" src="https://img.shields.io/github/v/release/callmehspear/cepta?display_name=tag&include_prereleases">
+<img alt="npm" src="https://img.shields.io/npm/v/cepta?label=version">
 <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/y/callmehspear/cepta">
 </div>
 
