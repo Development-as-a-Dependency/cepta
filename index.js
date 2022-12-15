@@ -39,7 +39,22 @@ if (process.argv[2] === 'create' || process.argv[2] === 'c') {
     });
   });
 } else if (process.argv[2] === '-help' || process.argv[2] === '-h') {
-  console.log("Usage: cepta create <project name>");
+  console.log("Usage: cepta <command> <options>");
+  console.log("Commands:");
+  console.log("  create, c: Create a new project");
+  console.log("    Options:");
+  console.log("      <project name>: The name of the project");
+  console.log("    Examples:");
+  console.log("      cepta create banking-app-project");
+  console.log("      cepta c silly-game-project");
+  console.log("  -version, -v: Check the version of cepta");
+  console.log("    Examples:");
+  console.log("      cepta -version");
+  console.log("      cepta -v");
+  console.log("  -help, -h: Show this help message");
+  console.log("    Examples:");
+  console.log("      cepta -help");
+  console.log("      cepta -h");
 } else if (process.argv[2] === '-version' || process.argv[2] === '-v') {
   axios.get('https://registry.npmjs.org/cepta')
   .then(function (response) {
