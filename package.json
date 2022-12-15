@@ -1,6 +1,6 @@
 {
   "name": "cepta",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Create Express Pug Tailwind App",
   "main": "index.js",
   "bin": {
