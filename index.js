@@ -43,7 +43,7 @@ axios.get('https://registry.npmjs.org/cepta').then(function (response) {
         });
       });
     });
-  } else if (process.argv[2] === '-help' || process.argv[2] === '-h') {
+  } else if (process.argv[2] === 'help' || process.argv[2] === 'h') {
     console.log("Usage: cepta <command> <options>");
     console.log("Commands:");
     console.log("  create, c: Create a new project");
@@ -52,19 +52,19 @@ axios.get('https://registry.npmjs.org/cepta').then(function (response) {
     console.log("    Examples:");
     console.log("      cepta create banking-app-project");
     console.log("      cepta c silly-game-project");
-    console.log("  -version, -v: Check the version of cepta");
+    console.log("  -version, v: Check the version of cepta");
     console.log("    Examples:");
-    console.log("      cepta -version");
-    console.log("      cepta -v");
-    console.log("  -update, -u: Update cepta");
+    console.log("      cepta version");
+    console.log("      cepta v");
+    console.log("  -update, u: Update cepta");
     console.log("    Examples:");
-    console.log("      cepta -update");
-    console.log("      cepta -u");
-    console.log("  -help, -h: Show this help message");
+    console.log("      cepta update");
+    console.log("      cepta u");
+    console.log("  -help, h: Show this help message");
     console.log("    Examples:");
-    console.log("      cepta -help");
-    console.log("      cepta -h");
-  } else if (process.argv[2] === '-version' || process.argv[2] === '-v') {
+    console.log("      cepta help");
+    console.log("      cepta h");
+  } else if (process.argv[2] === 'version' || process.argv[2] === 'v') {
     axios.get('https://registry.npmjs.org/cepta')
     .then(function (response) {
       // get the version from package.json
@@ -72,7 +72,7 @@ axios.get('https://registry.npmjs.org/cepta').then(function (response) {
       console.log("Installed Version: " + version);
       console.log("Latest Version: " + response.data['dist-tags'].latest);
     })
-  } else if (process.argv[2] === '-update' || process.argv[2] === '-u') {
+  } else if (process.argv[2] === 'update' || process.argv[2] === 'u') {
     console.log("Updating cepta...");
     exec('npm i -g cepta', (err, stdout, stderr) => {
       if (err) {
