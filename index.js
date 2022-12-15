@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const fs = require('fs-extra');
+const axios = require('axios');
 const { exec } = require('child_process');
 
 // if the args are create or c, create a new project
@@ -39,6 +40,14 @@ if (process.argv[2] === 'create' || process.argv[2] === 'c') {
   });
 } else if (process.argv[2] === '-help' || process.argv[2] === '-h') {
   console.log("Usage: cepta create <project name>");
+} else if (process.argv[2] === '-version' || process.argv[2] === '-v') {
+  axios.get('https://registry.npmjs.org/cepta')
+  .then(function (response) {
+    // get the version from package.json
+    var version = require('./package.json').version;
+    console.log("Installed Version: " + version);
+    console.log("Latest Version: " + response.data['dist-tags'].latest);
+  })
 } else {
   console.log("The command you entered is not valid. Run 'cepta -help' for help.");
 };

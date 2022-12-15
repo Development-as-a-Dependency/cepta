@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/callmehSpear/cepta#readme",
   "dependencies": {
+    "axios": "^1.2.1",
     "child_process": "^1.0.2",
     "fs-extra": "^11.1.0"
   }
