@@ -37,6 +37,8 @@ if (process.argv[2] === 'create' || process.argv[2] === 'c') {
       });
     });
   });
+} else if (process.argv[2] === '-help' || process.argv[2] === '-h') {
+  console.log("Usage: cepta create <project name>");
 } else {
-  console.log("The command you entered is not valid. Please use 'cepta create <project name>' or 'cepta c <project name>' to create a new project.");
+  console.log("The command you entered is not valid. Run 'cepta -help' for help.");
 };
