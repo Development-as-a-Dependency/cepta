@@ -24,3 +24,13 @@ npm install -g cepta
 ```bash
 cepta create <project-name>
 ```
+
+## Example
+  
+```bash
+cepta create my-app
+```
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
