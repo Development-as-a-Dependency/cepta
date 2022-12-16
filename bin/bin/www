@@ -7,88 +7,10 @@
 var app = require('../app');
 var debug = require('debug')('test:server');
 var http = require('http');
-var https = require('https');
-var fs = require('fs');
-
-// Use FS to read the key.key and cert.cert to key and cert varibles
-var key = fs.readFileSync('./bin/cert/key.key', 'utf8');
-var cert = fs.readFileSync('./bin/cert/cert.cert', 'utf8');
-
-// var key = `-----BEGIN PRIVATE KEY-----
-// MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7Vs+IDZ6QmuoF
-// N2nchulTZb2OtoW98/t3MHp0lUCDlMZlYqa3Pui1bBZ+pcR+2NOQJQOW/2GCkBwK
-// 0yw7TbhJPV/IfzXJCX/2ITNbVNqaddGwcCR+OhnZOIyF9YZa4pQO191nAZLz7MYk
-// /E+w8AYooa2uBckoD8pBXrCwCr7phXTMuhGnrFFjLC9dpyUNkFkAeBNX1moVbfqc
-// LDCK2SJJghxysfepptvxsLUXUegbvKlAWfVaoCN/k7ijOHsQ4YoXGbsIuoylHPuC
-// 8EhUi4IcdHhnf8OmXJcDnvylTe2wgxPgqNhmCtTZ4MeAiZ9imSg37dBm0Y1ScouL
-// 24kkViJdAgMBAAECggEAIGskXKnmr6VvK9nsAtKB3AG2LNUfDcED2htUhYoycNK1
-// BmRs7zb+tC5xMhdjioPhEIenOGEXMa3YfHMQq26Gnn31bk+9Mf3n2+Lg7UQg1Cvh
-// ToQJfKJ3SKTFhIT5bA7bijoGwUV/daCapVnYPIk8t5lK4dt0dO9Ok8NcFgq2ANjg
-// RenoKP/4eW+ebc0dvh1Mm7KFjXFsdFJRtYKor0G5jrTLRAOC1Mjd8Srj3dMeBTdR
-// JjVoKLTQVp8fUIFzWdSx6r4+A3f7wHBBLSbAS7N58LhYGpAivBySxMxUbn6xDaoU
-// eakDoutGFWjqTVdqCDmhBb0TFMN/xaJgP9NMYzWq4QKBgQDvbNRsUh77qHH7ri1T
-// dlC2qg7U3jqlR5y9aXOXZGJkuz7/1aNNMCUdgf0K1BiHUPjVoV2MAiUN49wi/Ebf
-// Pmk1IKFt5KuQRA10fb0364u6e+4jEQfcOulC6vtFPnKy+h86/bQDMXNvyul9bbHz
-// IGktegd9P/YD4LMe5fu7h/tTJQKBgQDITuVCq3wCvfQDqcw4Z8ybyp0iNufo4Z5y
-// /kxhCSemI0from9IHhfWdARc2AC++0RCMbKcuBm56DTdsNvOcmvJeXrVwkuLTTgI
-// MjvyoE7caY2bFx+L8tBJY2Yh1ldp1jcDn39PsBcRQI8NzEkpTGAfO+ZZ+PQhG+wH
-// /ZSV0k2I2QKBgQCLH9AnyWhbj7v8JXANKZkpK5RGuYOWexBnOBmFBT3vjqbC/p9P
-// wQQwK1KgsjI2nySY7pVvP+fMNHW8lp+QJbH4vydOtivDPugaot4K2oJtMIpmMgVB
-// QbI9wlGUIP+BZLo1CytJF7keYuhejBl1T4YOePRVIY+RHUa4U6d9hzzRSQKBgGbQ
-// kD7LVKj3pVNoCWn+ZXil5EfWlOzlOfZebwfzsgVF4LmjM6l5wNST0lVxjdh5kozD
-// g6GLobDZ7qDIEdsCwi61CwbDZxFGfnc+iaS9Ah2ClGvBz7B+3sh8m8TMhyvNB4n1
-// iVx2zzBMyeDUNc1b5Y7CqTcPYQfJlDp5v5WzT5bpAoGAWdTbA/hxfmLSNOPIjE7P
-// 7iF7wLGXNCMNnxARmVmmTGiDu5dJwV+qcuE2sSQT7N2OAz/+zybZXoZoIkpsqHEM
-// pB7zxuKC0VYdyq+b4wysG3e6OJcm27PnG8x7bXLjFXlVLfx2GEHgEwIyS6Srja1f
-// eKsB9DVdhxMF9LOMG67GcVs=
-// -----END PRIVATE KEY-----`;
-
-// var cert = `-----BEGIN CERTIFICATE-----
-// MIID8zCCAtugAwIBAgIUd/oMM23W9T/OzznoBpArjw9HAcowDQYJKoZIhvcNAQEL
-// BQAwgYgxCzAJBgNVBAYTAlVLMQ8wDQYDVQQIDAZTdXJyZXkxDzANBgNVBAcMBkxv
-// bmRvbjENMAsGA1UECgwEREFBRDENMAsGA1UECwwEREFBRDESMBAGA1UEAwwJbG9j
-// YWxob3N0MSUwIwYJKoZIhvcNAQkBFhZjYWxsbWVoc3BlYXJAZ21haWwuY29tMB4X
-// DTIyMTIxNDIzMTEzNFoXDTIzMDExMzIzMTEzNFowgYgxCzAJBgNVBAYTAlVLMQ8w
-// DQYDVQQIDAZTdXJyZXkxDzANBgNVBAcMBkxvbmRvbjENMAsGA1UECgwEREFBRDEN
-// MAsGA1UECwwEREFBRDESMBAGA1UEAwwJbG9jYWxob3N0MSUwIwYJKoZIhvcNAQkB
-// FhZjYWxsbWVoc3BlYXJAZ21haWwuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A
-// MIIBCgKCAQEAu1bPiA2ekJrqBTdp3IbpU2W9jraFvfP7dzB6dJVAg5TGZWKmtz7o
-// tWwWfqXEftjTkCUDlv9hgpAcCtMsO024ST1fyH81yQl/9iEzW1TamnXRsHAkfjoZ
-// 2TiMhfWGWuKUDtfdZwGS8+zGJPxPsPAGKKGtrgXJKA/KQV6wsAq+6YV0zLoRp6xR
-// YywvXaclDZBZAHgTV9ZqFW36nCwwitkiSYIccrH3qabb8bC1F1HoG7ypQFn1WqAj
-// f5O4ozh7EOGKFxm7CLqMpRz7gvBIVIuCHHR4Z3/DplyXA578pU3tsIMT4KjYZgrU
-// 2eDHgImfYpkoN+3QZtGNUnKLi9uJJFYiXQIDAQABo1MwUTAdBgNVHQ4EFgQUrhIf
-// 2r5M3cSRt+sALLCU6bK+caIwHwYDVR0jBBgwFoAUrhIf2r5M3cSRt+sALLCU6bK+
-// caIwDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAXxTydHncO6IO
-// DAN6nXG+cN7NB0SRdRquuESY8E6pQ/9wEJnH6h69QGfJ8htMREXeFUHBr/Wnc9G1
-// lf11FUOHHpJqN8QPDJUT6pfCRETSXfhaY1teT2pnLruVZMPtlfY73Eg1jnyNTLVT
-// wIPuPVgKCsF7THdAd13zICVapDGrkmzvNX9H0A+M1qqUeZWpm1votuHKg6Jpb7t/
-// 4KznJXW6q0bn7Odb+ukNSac7kTAHIEx9AKMBbRrkKamP3F7bd/lf+sipew/O7Zp0
-// 1LiEQpq72Q9NmtZVuHKio2TAdozc4JfgGwNtl/zFCXFcoJNH0HcMezJ+MpCapf5f
-// 7yrBEVUeng==
-// -----END CERTIFICATE-----`;
-
-/**
- * Get port from environment and store in Express.
- */
 
 var httpport = normalizePort(process.env.PORT || '80');
-var httpsport = normalizePort(process.env.PORT || '443');
-
-/**
- * Create HTTP server.
- */
 
 var httpserver = http.createServer(app);
-
-var httpsserver = https.createServer(
-  {
-    key: key,
-    cert: cert,
-  },
-  app
-);
-
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -96,10 +18,6 @@ var httpsserver = https.createServer(
 httpserver.listen(httpport);
 httpserver.on('error', onError);
 httpserver.on('listening', onListening);
-
-httpsserver.listen(httpsport);
-httpsserver.on('error', onError);
-httpsserver.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
