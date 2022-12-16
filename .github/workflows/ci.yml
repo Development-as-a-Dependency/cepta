@@ -1,0 +1,17 @@
+name: CI
+
+on: [push]
+
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install Dependencies
+        run: |
+          cd bin
+          npm ci
+      - name: Run Tests
+        run: |
+          cd bin
+          npm run test
