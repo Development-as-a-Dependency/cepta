@@ -50,9 +50,9 @@ inquirer
       console.log(chalk.blue("Creating project..."));
       if (answers.directory) {
         fs.mkdirSync(answers.projectName);
-        fs.copySync("./bin", `./${answers.projectName}`);
+        fs.copySync(__dirname + "/bin", `./${answers.projectName}`);
       } else {
-        fs.copySync("./bin", `./`);
+        fs.copySync(__dirname + "/bin", `./`);
       }
       console.clear();
       console.log(chalk.green("Project created"));
