@@ -228,9 +228,9 @@ inquirer
                         );
                         var exec6;
                         if (answers.directory) {
-                          exec6 = `cd ${answers.projectName}`;
+                          exec6 = `code ${answers.projectName}`;
                         } else {
-                          exec6 = `cd .`;
+                          exec6 = `code .`;
                         }
                         exec(exec6, (error, stdout, stderr) => {
                           if (error) {
