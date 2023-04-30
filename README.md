@@ -22,39 +22,9 @@ npm install -g cepta
 ## Usage
 
 ```bash
-cepta create <project-name>
+cepta
 ```
-
-## Example
-  
-```bash
-cepta create my-app
-```
-
-## Help
-
-```bash
-Usage: cepta <command> <options>
-Commands:
-  create, c: Create a new project
-    Options:
-      <project name>: The name of the project
-    Examples:
-      cepta create banking-app-project
-      cepta c silly-game-project
-  version, v: Check the version of cepta
-    Examples:
-      cepta version
-      cepta v
-  help, h: Show this help message
-    Examples:
-      cepta help
-      cepta h
-  update, u: Update cepta
-    Examples:
-      cepta update
-      cepta u
-```
+*As of v3.0.0, you can now use `cepta` instead of `cepta create`. No need to provide a project name as a questionaire will be given once you run the command.*
 
 ## Contributing
 

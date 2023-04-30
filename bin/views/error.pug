@@ -1,21 +1,36 @@
 doctype html
 html(lang='en')
-  head
-    title= error.status
-    link(rel='apple-touch-icon', sizes='180x180', href='/icon/apple-touch-icon.png')
-    link(rel='icon', type='image/png', sizes='32x32', href='/icon/favicon-32x32.png')
-    link(rel='icon', type='image/png', sizes='16x16', href='/icon/favicon-16x16.png')
-    link(rel='manifest', href='/icon/site.webmanifest')
-    link(rel='stylesheet', href='/css/style.css')
-    meta(charset='UTF-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    link(rel='preconnect', href='https://fonts.googleapis.com')
-    link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin)
-    link(
-      href='https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
-      rel='stylesheet'
-    )
-  body.bg-neutral-900.text-neutral-600
-    .flex.h-screen.items-center.justify-center
-      h1.font-poppins.text-2xl #{ error.status } | #{ message.toUpperCase() }
+  include defaults/note
+  include defaults/head
+  body.flex.h-screen.flex-col.justify-between.bg-neutral-100.text-neutral-700
+    include defaults/loading
+    .flex.flex-row.items-center.justify-between.bg-white.px-10.py-8.drop-shadow-xl(class='lg:px-24 lg:py-12')
+      .flex.flex-col.space-y-1
+        h1.select-none.font-poppins.text-4xl(class='lg:text-5xl')= message
+        h2.select-none.font-poppins.text-2xl Error #{ error.status }
+    .flex.flex-col.py-8.px-10.space-y-4.p-4(class='lg:flex-row lg:space-y-0 lg:px-24 lg:py-12')
+      .flex.flex-col
+        if error.status == 404
+          h4.max-w-xl.select-none.font-poppins.text-3xl(class="lg:text-4xl") The page you are looking for cannot be found.
+        else if error.status == 401
+          h4.max-w-xl.select-none.font-poppins.text-3xl(class="lg:text-4xl") You are not authorized to view this page.
+        else if error.status == 403
+          h4.max-w-xl.select-none.font-poppins.text-3xl(class="lg:text-4xl") You are forbidden from viewing this page.
+        else if error.status == 402
+          h4.max-w-xl.select-none.font-poppins.text-3xl(class="lg:text-4xl") You are not allowed to view this page.
+        else if error.status == 400
+          h4.max-w-xl.select-none.font-poppins.text-3xl(class="lg:text-4xl") The server cannot process your request.
+        else
+          h4.max-w-xl.select-none.font-poppins.text-3xl(class="lg:text-4xl") We recommend you come back in a few minutes.
+        h5.max-w-xl.select-none.font-poppins.text-xl(class="lg:text-2xl") We recommend checking you have the correct URL, refresh the page or try again later when this resource isn't so busy.
+    .flex.flex-row.items-center.justify-between.bg-white.px-10.py-8(class='lg:px-24 lg:py-12')
+      .flex.flex-col
+        h3.select-none.font-poppins.text-xl.text-2xl Need help? Contact us
+        a.select-none.font-poppins.text-lg.text-blue-400.transition-all(
+          class='hover:text-blue-600 lg:text-xl',
+          href='mailto:hello@daad.wtf'
+        ) hello@daad.wtf
+      //- cloudflare ray id
+      .flex.flex-col.items-end
+        h4.select-auto.text-right.font-poppins.text-lg Ray ID: #{ user.rayid }
+        h4.select-none.text-right.font-poppins.text-lg IP: #{ user.ip }
