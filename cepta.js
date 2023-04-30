@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-import inquirer from "inquirer";
-import chalk from "chalk";
-import { exec } from "child_process";
-import fs from "fs-extra";
 
+const chalk = require("chalk");
+const inquirer = require("inquirer");
+const { exec } = require("child_process");
+const fs = require("fs-extra");
 inquirer
   .prompt([
     {

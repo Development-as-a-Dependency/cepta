@@ -6,7 +6,6 @@
   "bin": {
     "cepta": "./cepta.js"
   },
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Development-as-a-Dependency/cepta.git"
@@ -24,9 +23,9 @@
   },
   "homepage": "https://github.com/Development-as-a-Dependency/cepta#readme",
   "dependencies": {
-    "chalk": "^5.2.0",
+    "chalk": "^4.0.0",
     "child_process": "^1.0.2",
     "fs-extra": "^11.1.0",
-    "inquirer": "^9.2.0"
+    "inquirer": "^8.0.0"
   }
 }
