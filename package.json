@@ -1,6 +1,6 @@
 {
   "name": "cepta",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Create Express Pug Tailwind App",
   "main": "cepta.js",
   "bin": {
@@ -17,7 +17,7 @@
     "Tailwind",
     "Express"
   ],
-  "author": "Ted",
+  "author": "ted@daad.wtf",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Development-as-a-Dependency/cepta/issues"
