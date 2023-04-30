@@ -265,5 +265,6 @@ inquirer
       );
     } else {
       console.log(chalk.red("Something has gone wrong"));
+      console.log(error);
     }
   });
