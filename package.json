@@ -1,10 +1,10 @@
 {
   "name": "cepta",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Create Express Pug Tailwind App",
-  "main": "index.js",
+  "main": "cepta.js",
   "bin": {
-    "cepta": "./index.js"
+    "cepta": "./cepta.js"
   },
   "type": "module",
   "repository": {
@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/Development-as-a-Dependency/cepta#readme",
   "dependencies": {
-    "axios": "^1.2.1",
     "chalk": "^5.2.0",
     "child_process": "^1.0.2",
     "fs-extra": "^11.1.0",

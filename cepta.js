@@ -2,7 +2,6 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 import { exec } from "child_process";
 import fs from "fs-extra";
-import axios from "axios";
 
 inquirer
   .prompt([
