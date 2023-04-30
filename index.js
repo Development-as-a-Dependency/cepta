@@ -153,17 +153,6 @@ inquirer
                                           }
                                           console.clear();
                                           console.log(
-                                            chalk.green("Project created")
-                                          );
-                                          console.log(
-                                            chalk.green(
-                                              "Dependencies installed"
-                                            )
-                                          );
-                                          console.log(
-                                            chalk.green("Project files created")
-                                          );
-                                          console.log(
                                             chalk.green(
                                               "🔥 Your project has been created successfully"
                                             )
@@ -201,6 +190,15 @@ inquirer
                                                 console.log(error);
                                                 process.exit(1);
                                               }
+                                              exec(
+                                                `npm i -g nodemon`,
+                                                (error, stdout, stderr) => {
+                                                  if (error) {
+                                                    console.log(error);
+                                                    process.exit(1);
+                                                  }
+                                                }
+                                              );
                                             }
                                           );
                                         }
