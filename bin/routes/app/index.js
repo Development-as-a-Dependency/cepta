@@ -5,7 +5,7 @@ var embed = require('../../src/embed');
 var func = require('../../src/func');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', async (req, res, next) {
   res.render('index', { title: 'Home', embed: embed });
 });
 
