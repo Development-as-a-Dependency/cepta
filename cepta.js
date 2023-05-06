@@ -60,8 +60,6 @@ if (
     }
     console.log(chalk.green("Cepta updated"));
   });
-} else if (process.argv[2] == undefined || process.argv[1] == undefined) {
-  console.log(chalk.red("Invalid Command"));
 } else {
   inquirer
     .prompt([
