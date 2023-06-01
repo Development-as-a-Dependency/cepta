@@ -3,8 +3,10 @@
 const chalk = require("chalk");
 const inquirer = require("inquirer");
 const { exec } = require("child_process");
-const fse = require("fs-extra");
-const fs = require("fs")
+const fs = {
+    ...require("fs"),
+    ...require("fs-extra")
+}
 
 switch (process.argv.filter(v => v.startsWith("-"))[0]) {
     case '--help':
@@ -57,8 +59,8 @@ switch (process.argv.filter(v => v.startsWith("-"))[0]) {
                         .replace(/^(.)/, ((s) => s.toLowerCase()));
                     console.clear();
                     console.log(chalk.blue`Creating project...`);
-                    if (answers.directory) fse.mkdirSync(answers.projectName);
-                    fse.copySync(__dirname + "/bin", `./${(answers.directory) ? answers.projectName : ''}`);
+                    if (answers.directory) fs.mkdirSync(answers.projectName);
+                    fs.copySync(__dirname + "/bin", `./${(answers.directory) ? answers.projectName : ''}`);
                     console.clear();
                     console.log(chalk.green`Project created`);
                     console.log(chalk.blue`Installing dependencies...`);
@@ -73,29 +75,29 @@ switch (process.argv.filter(v => v.startsWith("-"))[0]) {
                         console.log(chalk.green`Project created`);
                         console.log(chalk.green`Dependencies installed`);
                         console.log(chalk.blue`Creating project files...`);
-                        fse.renameSync(`./${(answers.directory) ? `${answers.projectName}/` : ''}bin/www`, `./${(answers.directory) ? `${answers.projectName}/` : ''}bin/${answers.projectName}`);
-                        fse.renameSync(`./${(answers.directory) ? `${answers.projectName}/` : ''}.env.example`, `./${(answers.directory) ? `${answers.projectName}/` : ''}.env`);
-                        fse.readFile((answers.directory) ? `./${answers.projectName}/.env` : `./.env`, "utf8", function (err, data) {
+                        fs.renameSync(`./${(answers.directory) ? `${answers.projectName}/` : ''}bin/www`, `./${(answers.directory) ? `${answers.projectName}/` : ''}bin/${answers.projectName}`);
+                        fs.renameSync(`./${(answers.directory) ? `${answers.projectName}/` : ''}.env.example`, `./${(answers.directory) ? `${answers.projectName}/` : ''}.env`);
+                        fs.readFile((answers.directory) ? `./${answers.projectName}/.env` : `./.env`, "utf8", function (err, data) {
                             if (err) errorhandler(err)
-                            fse.writeFile((answers.directory) ? `./${answers.projectName}/.env` : `./.env`, data.replace(/3000/g, answers.projectPort), "utf8", function (err) {
+                            fs.writeFile((answers.directory) ? `./${answers.projectName}/.env` : `./.env`, data.replace(/3000/g, answers.projectPort), "utf8", function (err) {
                                 if (err) errorhandler(err)
                             });
                         });
-                        fse.readFile((answers.directory) ? `./${answers.projectName}/package.json` : `./package.json`, "utf8", function (err, data) {
+                        fs.readFile((answers.directory) ? `./${answers.projectName}/package.json` : `./package.json`, "utf8", function (err, data) {
                             if (err) errorhandler(err)
-                            fse.writeFile((answers.directory) ? `./${answers.projectName}/package.json` : `./package.json`, data.replace(/"start": "nodemon .\/bin\/www"/g, `"start": "nodemon .\/bin\/${answers.projectName}"`), "utf8", function (err) {
+                            fs.writeFile((answers.directory) ? `./${answers.projectName}/package.json` : `./package.json`, data.replace(/"start": "nodemon .\/bin\/www"/g, `"start": "nodemon .\/bin\/${answers.projectName}"`), "utf8", function (err) {
                                 if (err) errorhandler(err)
                             });
                         });
-                        fse.readFile((answers.directory) ? `./${answers.projectName}/bin/${answers.projectName}` : `./bin/${answers.projectName}`, "utf8", function (err, data) {
+                        fs.readFile((answers.directory) ? `./${answers.projectName}/bin/${answers.projectName}` : `./bin/${answers.projectName}`, "utf8", function (err, data) {
                             if (err) errorhandler(err)
-                            fse.writeFile((answers.directory) ? `./${answers.projectName}/bin/${answers.projectName}` : `./bin/${answers.projectName}`, data.replace(/"name": "project"/g, `"name": "${answers.projectName}"`), "utf8", function (err) {
+                            fs.writeFile((answers.directory) ? `./${answers.projectName}/bin/${answers.projectName}` : `./bin/${answers.projectName}`, data.replace(/"name": "project"/g, `"name": "${answers.projectName}"`), "utf8", function (err) {
                                 if (err) errorhandler(err)
                             });
                         });
-                        fse.readFile((answers.directory) ? `./${answers.projectName}/bin/${answers.projectName}` : `./bin/${answers.projectName}`, "utf8", function (err, data) {
+                        fs.readFile((answers.directory) ? `./${answers.projectName}/bin/${answers.projectName}` : `./bin/${answers.projectName}`, "utf8", function (err, data) {
                             if (err) errorhandler(err)
-                            fse.writeFile(
+                            fs.writeFile(
                                 (answers.directory) ? `./${answers.projectName}/bin/${answers.projectName}` : `./bin/${answers.projectName}`,
                                 data.replace(/var httpport = normalizePort\(process.env.PORT \|\| '80'\);/g, `var httpport = normalizePort(process.env.PORT || '${answers.projectPort}');`),
                                 "utf8",
