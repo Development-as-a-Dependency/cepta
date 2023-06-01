@@ -5,6 +5,8 @@ const inquirer = require("inquirer");
 const { exec } = require("child_process");
 const fs = require("fs-extra");
 
+const args = process.argv.slice(1)
+
 if (
   process.argv[2] == "--help" ||
   process.argv[2] == "-h" ||

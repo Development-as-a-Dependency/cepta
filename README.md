@@ -2,11 +2,11 @@
 <h1>CEPTA</h1>
 <p>Create Express Pug Tailwind App</p>
 
-<img alt="GitHub Issues" src="https://img.shields.io/github/issues/callmehspear/cepta">
-<img alt="GitHub" src="https://img.shields.io/github/license/callmehspear/cepta?logo=MIT">
-<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/callmehspear/cepta">
+<img alt="GitHub Issues" src="https://img.shields.io/github/issues/Development-As-A-Dependency/cepta">
+<img alt="GitHub" src="https://img.shields.io/github/license/Development-As-A-Dependency/cepta?logo=MIT">
+<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/Development-As-A-Dependency/cepta">
 <img alt="npm" src="https://img.shields.io/npm/v/cepta?label=version">
-<img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/y/callmehspear/cepta">
+<img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/y/Development-As-A-Dependency/cepta">
 </div>
 
 ## What is CEPTA?
