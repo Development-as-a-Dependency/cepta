@@ -6,6 +6,10 @@
   "bin": {
     "cepta": "./cepta.js"
   },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.8.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Development-as-a-Dependency/cepta.git"
@@ -27,5 +31,15 @@
     "child_process": "^1.0.2",
     "fs-extra": "^11.1.0",
     "inquirer": "^8.0.0"
+  },
+  "pkg": {
+    "scripts": "cepta.js",
+    "assets": "bin/**/*",
+    "targets": [
+      "node18-linux-x64",
+      "node18-macos-x64",
+      "node18-win-x64"
+    ],
+    "outputPath": "dist"
   }
 }

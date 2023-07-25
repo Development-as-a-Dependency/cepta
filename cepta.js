@@ -3,6 +3,7 @@
 const chalk = require("chalk");
 const inquirer = require("inquirer");
 const { exec } = require("child_process");
+const path = require('path')
 const fs = {
     ...require("fs"),
     ...require("fs-extra")
@@ -11,7 +12,7 @@ const fs = {
 switch (process.argv.filter(v => v.startsWith("-"))[0]) {
     case '--help':
     case '-h':
-        return console.log(chalk.blue`${fs.readFileSync(`${__dirname}/src/helpmsg`).toString()}`);
+        return console.log(chalk.blue`${fs.readFileSync(path.join(__dirname, '/src/helpmsg')).toString()}`);
     case '--version':
     case '-v':
         return exec("npm view cepta version", (error, stdout, _) => (error) ? console.log(chalk.red`Error checking version\n${error}`) : console.log(chalk.blue`Cepta version: ${require(`${__dirname}/package.json`).version}\nLatest version: ${stdout}`));
@@ -60,7 +61,7 @@ switch (process.argv.filter(v => v.startsWith("-"))[0]) {
                     console.clear();
                     console.log(chalk.blue`Creating project...`);
                     if (answers.directory) fs.mkdirSync(answers.projectName);
-                    fs.copySync(__dirname + "/bin", `./${(answers.directory) ? answers.projectName : ''}`);
+                    fs.copySync(path.join(__dirname, "/bin"), `./${(answers.directory) ? answers.projectName : ''}`);
                     console.clear();
                     console.log(chalk.green`Project created`);
                     console.log(chalk.blue`Installing dependencies...`);
