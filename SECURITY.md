@@ -9,7 +9,7 @@ Versions which are marked as ✅ are supported, and will receive security update
 | 1.x.x   | ❌ |
 | 2.x.x   | ❌ |
 | 3.x.x   | ✅ |
-| §.x.x   | ✅ |
+| 4.x.x   | ✅ |
 
 ## Reporting a Vulnerability
 
