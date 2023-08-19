@@ -1,3 +1,5 @@
+console.log(require('chalk').green(require('../../settings.json').settings.prefix + ' App/Index Loading...'));
+
 const express = require('express');
 const router = express.Router();
 
@@ -10,3 +12,5 @@ router.get('/', async function (req, res, next) {
 });
 
 module.exports = router;
+
+console.log(require('chalk').green(require('../../settings.json').settings.prefix + ' App/Index Loaded.'));

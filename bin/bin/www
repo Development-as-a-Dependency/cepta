@@ -1,63 +1,45 @@
-#!/usr/bin/env node
+const chalk = require('chalk');
+const dotenv = require('dotenv');
+const http = require('http');
+const debug = require('debug')('test:server');
+const { settings } = require('../settings.json');
 
-/**
- * Module dependencies.
- */
+dotenv.config();
 
-var app = require('../app');
-var debug = require('debug')('test:server');
-var http = require('http');
+// Initialization Log
+console.log(chalk.green(`${settings.prefix} Server Loading...`));
 
-var httpport = normalizePort(process.env.PORT || '80');
+const app = require('../app');
 
-var httpserver = http.createServer(app);
-/**
- * Listen on provided port, on all network interfaces.
- */
+const DEFAULT_PORT = '1945';
+const port = normalizePort(process.env.PORT || DEFAULT_PORT);
+const server = http.createServer(app);
 
-httpserver.listen(httpport);
-httpserver.on('error', onError);
-httpserver.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
+server.listen(port);
+server.on('error', handleServerError);
+server.on('listening', handleServerListening);
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+  const parsedPort = parseInt(val, 10);
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+  if (isNaN(parsedPort)) return val; // Named pipe
+  if (parsedPort >= 0) return parsedPort; // Port number
 
   return false;
 }
 
-/**
- * Event listener for HTTP server "error" event.
- */
+function handleServerError(error) {
+  if (error.syscall !== 'listen') throw error;
 
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+  const bind = typeof port === 'string' ? `Pipe ${port}` : `Port ${port}`;
 
-  var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
-
-  // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
+      console.error(`${bind} requires elevated privileges`);
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
+      console.error(`${bind} is already in use`);
       process.exit(1);
       break;
     default:
@@ -65,10 +47,11 @@ function onError(error) {
   }
 }
 
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  console.log("Server listening on http://localhost:" + httpport);
+function handleServerListening() {
+  console.log(
+    chalk.green(`${settings.prefix} Server Listening on ${process.env.BASE_URL || 'http://localhost' + ':' + port}`)
+  );
 }
+
+// Loaded Log
+console.log(chalk.green(`${settings.prefix} Server Loaded.`));
