@@ -1,0 +1,17 @@
+Cepta Help Menu:
+    cepta
+        Create a new project
+        Questions:
+            What is your project name?
+                Default: myProject
+            What type of project is this?
+                Choices: Express
+            What port shall this project run on?
+                Default: 3000
+    cepta --help / -h
+          Show this help menu
+    cepta --version / -v
+        Check version of Cepta compared to latest version
+    cepta --update / -u
+        Update Cepta to the latest version from NPM
+  

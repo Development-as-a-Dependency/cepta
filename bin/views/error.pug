@@ -1,0 +1,36 @@
+doctype html
+html(lang='en')
+  include defaults/note
+  include defaults/head
+  body.flex.h-screen.flex-col.justify-between.bg-neutral-100.text-neutral-700
+    include defaults/loading
+    .flex.flex-row.items-center.justify-between.bg-white.px-10.py-8.drop-shadow-xl(class='lg:px-24 lg:py-12')
+      .flex.flex-col.space-y-1
+        h1.select-none.font-poppins.text-4xl(class='lg:text-5xl')= message
+        h2.select-none.font-poppins.text-2xl Error #{ error.status }
+    .flex.flex-col.py-8.px-10.space-y-4.p-4(class='lg:flex-row lg:space-y-0 lg:px-24 lg:py-12')
+      .flex.flex-col
+        if error.status == 404
+          h4.max-w-xl.select-none.font-poppins.text-3xl(class="lg:text-4xl") The page you are looking for cannot be found.
+        else if error.status == 401
+          h4.max-w-xl.select-none.font-poppins.text-3xl(class="lg:text-4xl") You are not authorized to view this page.
+        else if error.status == 403
+          h4.max-w-xl.select-none.font-poppins.text-3xl(class="lg:text-4xl") You are forbidden from viewing this page.
+        else if error.status == 402
+          h4.max-w-xl.select-none.font-poppins.text-3xl(class="lg:text-4xl") You are not allowed to view this page.
+        else if error.status == 400
+          h4.max-w-xl.select-none.font-poppins.text-3xl(class="lg:text-4xl") The server cannot process your request.
+        else
+          h4.max-w-xl.select-none.font-poppins.text-3xl(class="lg:text-4xl") We recommend you come back in a few minutes.
+        h5.max-w-xl.select-none.font-poppins.text-xl(class="lg:text-2xl") We recommend checking you have the correct URL, refresh the page or try again later when this resource isn't so busy.
+    .flex.flex-row.items-center.justify-between.bg-white.px-10.py-8(class='lg:px-24 lg:py-12')
+      .flex.flex-col
+        h3.select-none.font-poppins.text-xl.text-2xl Need help? Contact us
+        a.select-none.font-poppins.text-lg.text-blue-400.transition-all(
+          class='hover:text-blue-600 lg:text-xl',
+          href='mailto:hello@daad.wtf'
+        ) hello@daad.wtf
+      //- cloudflare ray id
+      .flex.flex-col.items-end
+        h4.select-auto.text-right.font-poppins.text-lg Ray ID: #{ user.rayid }
+        h4.select-none.text-right.font-poppins.text-lg IP: #{ user.ip }

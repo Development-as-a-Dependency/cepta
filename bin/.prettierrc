@@ -1,0 +1,8 @@
+{
+  "singleQuote": true,
+  "tabWidth": 2,
+  "bracketSpacing": true,
+  "printWidth": 120,
+  "plugins": ["@prettier/plugin-pug", "prettier-plugin-tailwindcss"],
+  "pluginSearchDirs": false
+}
