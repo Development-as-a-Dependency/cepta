@@ -1,6 +1,6 @@
 {
   "name": "cepta",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "Create Express Pug Tailwind App",
   "main": "cepta.js",
   "bin": {
@@ -9,6 +9,9 @@
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=9.8.1"
+  },
+  "scripts": {
+    "build": "pkg . --out-path dist"
   },
   "repository": {
     "type": "git",
