@@ -66,14 +66,12 @@ switch (process.argv.filter(v => v.startsWith("-"))[0]) {
                     console.log(chalk.green`Project created`);
                     console.log(chalk.blue`Installing dependencies...`);
                     exec((answers.directory) ? `cd ${answers.projectName} && npm install` : `npm install`, (error, ..._) => {
+                        console.clear();
+                        console.log(chalk.green`Project created`);
                         if (error) {
-                            console.clear();
-                            console.log(chalk.green`Project created`);
                             console.log(chalk.red`Error installing dependencies`);
                             errorhandler(error)
                         }
-                        console.clear();
-                        console.log(chalk.green`Project created`);
                         console.log(chalk.green`Dependencies installed`);
                         console.log(chalk.blue`Creating project files...`);
                         fs.renameSync(`./${(answers.directory) ? `${answers.projectName}/` : ''}bin/www`, `./${(answers.directory) ? `${answers.projectName}/` : ''}bin/${answers.projectName}`);
@@ -104,3 +102,9 @@ switch (process.argv.filter(v => v.startsWith("-"))[0]) {
                                 "utf8",
                                 (err) => (err) ? errorhandler(err) : undefined
                             );
+                        })
+                    });
+                }
+            });
+        break;
+}
