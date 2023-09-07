@@ -104,36 +104,3 @@ switch (process.argv.filter(v => v.startsWith("-"))[0]) {
                                 "utf8",
                                 (err) => (err) ? errorhandler(err) : undefined
                             );
-
-                        });
-                        console.clear();
-                        console.log(chalk.green`🔥 Your project has been created successfully`);
-                        console.log(" ");
-                        console.log(`To to start your project on port ${answers.projectPort}, run the following command:\n${chalk.blue`${(answers.directory) ? `cd ${answers.projectName} && ` : ''}npm start`}`);
-                        console.log(" ");
-                        console.log(`To start building the CSS for your project, run the following command:\n${chalk.blue`${(answers.directory) ? `cd ${answers.projectName} && ` : ''}npm run build`}`);
-                        console.log(" ");
-                        console.log(chalk.green`Created with CEPTA CLI by DAAD`)
-                        exec((answers.directory) ? `code ${answers.projectName}` : `code .`, (error, ..._) => {
-                            if (error) errorhandler(error)
-                        });
-                        exec(
-                            `npm i -g nodemon`,
-                            (error, ..._) => {
-                                if (error) errorhandler(error)
-                            }
-                        );
-                    });
-                } else {
-                    console.log(chalk.red`Aborting project creation...`);
-                    process.exit(1);
-                }
-            })
-            .catch((error) => {
-                if (error.isTtyError) return console.log(chalk.red`Prompt couldn't be rendered in the current environment`);
-                console.log(chalk.red`Something has gone wrong`);
-                console.log(error);
-                console.log("test");
-            });
-        break;
-}
