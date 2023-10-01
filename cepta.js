@@ -1,24 +1,32 @@
 #!/usr/bin/env node
 
-const chalk = require("chalk");
-const inquirer = require("inquirer");
-const { promisify } = require("util");
-const execAsync = promisify(require("child_process").exec);
-const fs = require("fs-extra");
-const path = require("path");
+import chalk from "chalk";
+import inquirer from "inquirer";
+import { exec as execAsync } from "child_process";
+import { exec } from "child_process";
+import fs from "fs-extra";
+import path from "path";
+import ora from "ora";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+// Get the directory name of the current module using import.meta.url
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 (async () => {
+  const spinner = ora();
   try {
     const arg = process.argv.find((v) => v.startsWith("-"));
 
     switch (arg) {
       case "--help":
       case "-h":
-        return console.log(
-          chalk.blue`${fs
-            .readFileSync(path.join(__dirname, "/src/helpmsg"))
-            .toString()}`
-        );
+        const helpMsg = fs
+          .readFileSync(path.join(__dirname, "/src/helpmsg"))
+          .toString();
+        console.log(chalk.blue`${helpMsg}`);
+        break;
 
       case "--version":
       case "-v":
@@ -31,8 +39,9 @@ const path = require("path");
 
       case "--update":
       case "-u":
+        spinner.start(chalk.blue("Updating Cepta..."));
         await execAsync("npm install -g cepta");
-        console.log(chalk.green("Cepta updated"));
+        spinner.succeed(chalk.green("Cepta updated"));
         break;
 
       default:
@@ -69,17 +78,17 @@ const path = require("path");
         ]);
 
         if (answers.project) {
+          const start = Date.now();
           answers.projectName = answers.projectName
             .replace(/\s(.)/g, (s) => s.toUpperCase())
             .replace(/\s/g, "")
             .replace(/^(.)/, (s) => s.toLowerCase());
 
           console.clear();
-          console.log(chalk.blue`Creating project...`);
-          // check direcotry hasnt alredy been made
+          spinner.start(chalk.blue("Creating project..."));
           if (answers.directory) {
             if (await fs.pathExists(answers.projectName)) {
-              console.log(chalk.red`Directory already exists`);
+              spinner.fail(chalk.red("Directory already exists"));
               process.exit(1);
             }
           }
@@ -88,19 +97,16 @@ const path = require("path");
             path.join(__dirname, "/bin"),
             `./${answers.directory ? answers.projectName : ""}`
           );
-          console.clear();
-          console.log(chalk.green`Project created`);
-          console.log(chalk.blue`Installing dependencies...`);
+          spinner.succeed(chalk.green("Project created"));
+          spinner.start(chalk.blue("Installing dependencies..."));
           await execAsync(
             answers.directory
               ? `cd ${answers.projectName} && npm install`
               : `npm install`
           );
 
-          console.clear();
-          console.log(chalk.green`Project created`);
-          console.log(chalk.blue`Dependencies installed`);
-          console.log(chalk.blue`Creating project files...`);
+          spinner.succeed(chalk.green("Dependencies installed"));
+          spinner.start(chalk.blue("Creating project files..."));
 
           await Promise.all([
             fs.rename(
@@ -167,11 +173,47 @@ const path = require("path");
             ),
             "utf8"
           );
+
+          spinner.succeed(chalk.green("Project files created"));
+          console.log(" ");
+          console.log(
+            chalk.yellow(
+              `------------------------------------------------------`
+            )
+          );
+          console.log(" ");
+          const end = Date.now();
+          const time = ((end - start) / 1000).toFixed(1);
+          console.log(
+            chalk.white(
+              `🎉 Project ${chalk.green("created")} in ${chalk.blue(
+                time + "s"
+              )}`
+            )
+          );
+          console.log(
+            chalk.green(`🔗 ./${answers.directory ? answers.projectName : ""}`)
+          );
+          console.log(" ");
+          console.log(
+            chalk.white(
+              "👉 Run " + chalk.blue("npm start") + " to start the project"
+            )
+          );
+          console.log(" ");
+          console.log(
+            chalk.yellow(
+              `------------------------------------------------------`
+            )
+          );
+          console.log(" ");
+          if (answers.directory) process.chdir(answers.projectName);
+          process.exit(0);
         }
         break;
     }
   } catch (error) {
-    console.error(error);
+    spinner.fail(`An error occurred: ${error.message}`);
     process.exit(1);
   }
 })();
