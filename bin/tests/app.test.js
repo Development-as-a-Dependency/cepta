@@ -2,7 +2,7 @@ const app = require('../app');
 const request = require('supertest');
 
 beforeAll(async () => {
-  const port = process.env.PORT || '80';
+  const port = process.env.PORT || '3000';
   server = app.listen(port);
 });
 
