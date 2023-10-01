@@ -1,16 +1,9 @@
-console.log(require('chalk').green(require('../../settings.json').settings.prefix + ' App/Index Loading...'));
-
 const express = require('express');
 const router = express.Router();
-
 const embed = require('../../src/embed');
-const func = require('../../src/func');
 
-/* GET home page. */
-router.get('/', async function (req, res, next) {
-  res.render('index', { title: 'Home', embed: embed });
+router.get('/', async (req, res, next) => {
+  res.render('index', { title: 'Home', embed });
 });
 
 module.exports = router;
-
-console.log(require('chalk').green(require('../../settings.json').settings.prefix + ' App/Index Loaded.'));

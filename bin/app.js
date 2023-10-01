@@ -1,15 +1,28 @@
-console.log(require('chalk').green(require('./settings.json').settings.prefix + ' App Loading...'));
-
 const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const embed = require('./src/embed');
-const routeManager = require('./routes/router');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const compression = require('compression');
+const embed = require('./src/embed');
+const routeManager = require('./routes/router');
+const logger = require('./src/logger');
+
+require('dotenv').config();
+
+const app = express();
+
+// App settings
+app.set('view engine', 'pug');
+
+// Middleware configurations
+app.use(logger);
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(helmet({ contentSecurityPolicy: false }));
+app.use(express.static('public'));
 
 // Rate limiter
 const limiter = rateLimit({
@@ -20,31 +33,13 @@ const limiter = rateLimit({
     next(createError(429, 'Too many requests, please try again later.'));
   },
 });
-
-require('dotenv').config();
-
-const app = express();
-
-// App settings
-app.set('view engine', 'pug');
-
-// Middleware configurations
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(
-  helmet({
-    contentSecurityPolicy: false,
-  }),
-);
-app.use(express.static('public'));
 app.use(limiter);
+
 app.use(cors());
 app.use(compression());
 
 // Disable caching for all routes
-app.all('*', (req, res, next) => {
+app.use((req, res, next) => {
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   next();
 });
@@ -59,27 +54,15 @@ app.use((req, res, next) => {
 
 // General error handler
 app.use((err, req, res, next) => {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  const error = {
-    status: err.status || 500,
-    message: err.message,
-  };
-
+  const status = err.status || 500;
   const user = {
-    ip:
-      req.headers['cf-connecting-ip'] || req.connection.remoteAddress ||
-      req.ip ||
-      'Unknown',
+    ip: req.headers['cf-connecting-ip'] || req.connection.remoteAddress || req.ip || 'Unknown',
     rayid: req.headers['cf-ray'] || 'Unknown',
   };
 
   console.error(err);
 
-  res.status(err.status || 500).render('error', { title: err.status || 500, embed: embed, error: error, user: user });
+  res.status(status).render('error', { title: status, embed, error: { status, message: err.message }, user });
 });
 
 module.exports = app;
-
-console.log(require('chalk').green(require('./settings.json').settings.prefix + ' App Loaded.'));
