@@ -192,7 +192,9 @@ const __dirname = dirname(__filename);
             )
           );
           console.log(
-            chalk.green(`🔗 ./${answers.directory ? answers.projectName : ""}`)
+            chalk.green(
+              `🔗 ${answers.directory ? "./" + answers.projectName : "./"}`
+            )
           );
           console.log(" ");
           console.log(
