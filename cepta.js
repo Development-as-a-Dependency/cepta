@@ -5,7 +5,7 @@ import inquirer from "inquirer";
 import { exec as execAsync } from "child_process";
 import { exec } from "child_process";
 import fs from "fs-extra";
-import { version as ceptaVersion } from "./package.json";
+import { version as ceptaVersion } from "./package.json" assert { type: "json" };
 import path from "path";
 import ora from "ora";
 import { fileURLToPath } from "url";
