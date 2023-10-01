@@ -24,6 +24,10 @@ bun install -g cepta
 ```
 or
 ```bash
+pnpm install -g cepta
+```
+or
+```bash
 yarn install -g cepta
 ```
 
