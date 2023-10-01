@@ -5,8 +5,6 @@ import inquirer from "inquirer";
 import { exec as execAsync } from "child_process";
 import { exec } from "child_process";
 import fs from "fs-extra";
-import { version as ceptaVersion } from "./package.json";
-assert({ type: "json" });
 import path from "path";
 import ora from "ora";
 import { fileURLToPath } from "url";
@@ -22,29 +20,6 @@ const __dirname = dirname(__filename);
     const arg = process.argv.find((v) => v.startsWith("-"));
 
     switch (arg) {
-      case "--help":
-      case "-h":
-        const helpMsg = fs
-          .readFileSync(path.join(__dirname, "/src/helpmsg"))
-          .toString();
-        console.log(chalk.blue`${helpMsg}`);
-        break;
-
-      case "--version":
-      case "-v":
-        const { stdout } = await execAsync("npm view cepta version");
-        console.log(
-          chalk.blue`Cepta version: ${ceptaVersion}\nLatest version: ${stdout}`
-        );
-        break;
-
-      case "--update":
-      case "-u":
-        spinner.start(chalk.blue("Updating Cepta..."));
-        await execAsync("npm install -g cepta");
-        spinner.succeed(chalk.green("Cepta updated"));
-        break;
-
       default:
         const answers = await inquirer.prompt([
           {
