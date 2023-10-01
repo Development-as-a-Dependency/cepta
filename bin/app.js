@@ -1,13 +1,13 @@
 const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const compression = require('compression');
 const embed = require('./src/embed');
 const routeManager = require('./routes/router');
+const logger = require('./src/logger');
 
 require('dotenv').config();
 
@@ -17,7 +17,7 @@ const app = express();
 app.set('view engine', 'pug');
 
 // Middleware configurations
-app.use(logger('dev'));
+app.use(logger);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
