@@ -2,17 +2,31 @@ name: Publish Package to npmjs
 on:
   release:
     types: [created]
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      # Setup .npmrc file to publish to npm
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: 'Setup Node.js environment'
+        uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm ci
-      - run: npm publish
+          node-version: '20'
+      - name: 'Install dependencies'
+        run: npm ci
+      - name: 'Publish to npm'
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${GH_TOKEN}" >> ~/.npmrc
+          npm publish --access public --provenance --registry https://registry.npmjs.org
+          npm publish --access public --registry https://npm.pkg.github.com
+          echo "Published to npm" >> $GITHUB_STEP_SUMMARY
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
