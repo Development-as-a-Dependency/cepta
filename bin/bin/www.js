@@ -3,7 +3,6 @@ const start = Date.now();
 const chalk = require('chalk');
 const dotenv = require('dotenv');
 const http = require('http');
-const debug = require('debug')('test:server');
 
 dotenv.config();
 
@@ -13,28 +12,29 @@ const port = normalizePort(process.env.PORT || DEFAULT_PORT);
 const server = http.createServer(app);
 
 console.clear();
-console.log(' ');
-console.log(chalk.yellow(`------------------------------------------------------`));
-console.log(' ');
-console.log('⏳ ' + chalk.blue('Loading...'));
+console.log([
+  chalk.yellow(`------------------------------------------------------`),
+  '',
+  `⏳ ${chalk.blue('Loading...')}`,
+  '',
+  `${chalk.yellow(`🚀`)} ${chalk.green('Starting server...')}`,
+  ''
+].join('\n'));
 
-server.listen(port);
-server.on('error', handleServerError);
-server.on('listening', handleServerListening);
+server
+  .listen(port)
+  .on('error', handleServerError)
+  .on('listening', handleServerListening);
 
 function normalizePort(val) {
   const parsedPort = parseInt(val, 10);
-
-  if (isNaN(parsedPort)) return val; // Named pipe
-  if (parsedPort >= 0) return parsedPort; // Port number
-
-  return false;
+  return (isNaN(parsedPort)) ? val : (parsedPort >= 0) ? parsedPort : false;
 }
 
 function handleServerError(error) {
   if (error.syscall !== 'listen') throw error;
 
-  const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+  const bind = `${typeof port === 'string' ? 'Pipe' : 'Port'} ${port}`;
   const errorMessages = {
     EACCES: `🔥 ${bind} requires elevated privileges`,
     EADDRINUSE: `🔥 ${bind} is already being used`,
@@ -52,11 +52,14 @@ function handleServerError(error) {
 
 function handleServerListening() {
   const end = Date.now();
-  console.log('🎈 ' + chalk.green('Loaded in ' + (end - start) + 'ms'));
-  console.log(' ');
-  console.info(`🔥 Server is ${chalk.green('online')}!`);
-  console.info(`🔗 ${chalk.underline(process.env.BASE_URL || 'http://localhost:' + port)}`);
-  console.info(' ');
-  console.log(chalk.yellow(`------------------------------------------------------`));
-  console.log(' ');
+  console.log([
+    `🎈 ${chalk.green(`Loaded in ${end - start}ms`)}`,
+    '',
+    `🔥 Server is ${chalk.green('online')}!`,
+    `🔗 ${chalk.underline(process.env.BASE_URL || `http://localhost:${port}`)}`,
+    '',
+    chalk.yellow(`------------------------------------------------------`),
+    '',
+    ''
+  ].join('\n'));
 }

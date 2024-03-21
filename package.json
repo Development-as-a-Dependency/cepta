@@ -9,10 +9,10 @@
   },
   "engines": {
     "node": ">=18.0.0",
-    "npm": ">=9.8.1"
+    "npm": ">=10"
   },
   "scripts": {
-    "build": "pkg . --out-path dist"
+    "build": "pkg ."
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,16 @@
     "Tailwind",
     "Express"
   ],
-  "author": "ted@daad.wtf",
+  "contributors": [
+    {
+      "name": "Benjamin",
+      "email": "ben@daad.wtf"
+    }
+  ],
+  "author": {
+    "name": "Development as a Dependency",
+    "email": "ted@daad.wtf"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Development-as-a-Dependency/cepta/issues"

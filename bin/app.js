@@ -11,58 +11,46 @@ const logger = require('./src/logger');
 
 require('dotenv').config();
 
-const app = express();
-
-// App settings
-app.set('view engine', 'pug');
-
-// Middleware configurations
-app.use(logger);
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(helmet({ contentSecurityPolicy: false }));
-app.use(express.static('public'));
-
-// Rate limiter
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 60, // limit each IP to 60 requests per windowMs
-  handler: (req, res, next) => {
+  handler: (...p) => {
     // Call custom error handler
-    next(createError(429, 'Too many requests, please try again later.'));
+    p[2](createError(429, 'Too many requests, please try again later.'));
   },
 });
-app.use(limiter);
 
-app.use(cors());
-app.use(compression());
+const app = express();
 
-// Disable caching for all routes
-app.use((req, res, next) => {
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  next();
-});
+app
+  .set('view engine', 'pug')
+  .use(logger)
+  .use(express.json())
+  .use(express.urlencoded({ extended: false }))
+  .use(cookieParser())
+  .use(helmet({ contentSecurityPolicy: false }))
+  .use(express.static('public'))
+  .use(limiter)
+  .use(cors())
+  .use(compression())
+  .use((_, res, next) => {
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    next();
+  })
+  .use('/', routeManager)
+  .use((req, res, next) => {
+    next(createError(404));
+  })
+  .use((err, req, res, next) => {
+    const status = err.status || 500;
+    const user = {
+      ip: req.headers['cf-connecting-ip'] || req.connection.remoteAddress || req.ip || 'Unknown',
+      rayid: req.headers['cf-ray'] || 'Unknown',
+    };
 
-// Routes
-app.use('/', routeManager);
+    console.error(err);
 
-// 404 handler
-app.use((req, res, next) => {
-  next(createError(404));
-});
-
-// General error handler
-app.use((err, req, res, next) => {
-  const status = err.status || 500;
-  const user = {
-    ip: req.headers['cf-connecting-ip'] || req.connection.remoteAddress || req.ip || 'Unknown',
-    rayid: req.headers['cf-ray'] || 'Unknown',
-  };
-
-  console.error(err);
-
-  res.status(status).render('error', { title: status, embed, error: { status, message: err.message }, user });
-});
+    res.status(status).render('error', { title: status, embed, error: { status, message: err.message }, user });
+  });
 
 module.exports = app;
