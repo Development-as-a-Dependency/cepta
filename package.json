@@ -11,9 +11,6 @@
     "node": ">=18.0.0",
     "npm": ">=10"
   },
-  "scripts": {
-    "build": "pkg ."
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Development-as-a-Dependency/cepta.git"
@@ -28,10 +25,14 @@
     {
       "name": "Benjamin",
       "email": "ben@daad.wtf"
+    },
+    {
+      "name": "Teddy",
+      "email": "ted@daad.wtf"
     }
   ],
   "author": {
-    "name": "Development as a Dependency",
+    "name": "Teddy",
     "email": "ted@daad.wtf"
   },
   "license": "MIT",
@@ -45,15 +46,5 @@
     "fs-extra": "^11.1.0",
     "inquirer": "^8.0.0",
     "ora": "^7.0.1"
-  },
-  "pkg": {
-    "scripts": "cepta.js",
-    "assets": "bin/**/*",
-    "targets": [
-      "node18-linux-x64",
-      "node18-macos-x64",
-      "node18-win-x64"
-    ],
-    "outputPath": "dist"
   }
 }

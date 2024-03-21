@@ -16,18 +16,13 @@ CEPTA is a CLI tool that helps you create a new Express.js app with Pug and Tail
 ## Installation
 
 ```bash
+# npm
 npm install -g cepta
-```
-or
-```bash
+# bun
 bun install -g cepta
-```
-or
-```bash
+# pnpm
 pnpm install -g cepta
-```
-or
-```bash
+# yarn
 yarn install -g cepta
 ```
 

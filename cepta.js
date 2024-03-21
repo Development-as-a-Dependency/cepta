@@ -3,7 +3,6 @@
 import chalk from "chalk";
 import inquirer from "inquirer";
 import { exec as execAsync } from "child_process";
-import { exec } from "child_process";
 import fs from "fs-extra";
 import path from "path";
 import ora from "ora";
